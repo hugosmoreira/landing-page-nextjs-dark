@@ -2,6 +2,13 @@ import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/20/solid'
 
+
+type Frequency = 'monthly' | 'annually';
+
+type Price = {
+  [key in Frequency]: string;
+};
+
 const frequencies = [
   { value: 'monthly', label: 'Monthly', priceSuffix: '/month' },
   { value: 'annually', label: 'Annually', priceSuffix: '/year' },
@@ -49,9 +56,9 @@ const tiers = [
   },
 ]
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+function classNames(...classes: (string | undefined)[]) {
+    return classes.filter(Boolean).join(' ');
+  }
 
 export default function Example() {
   const [frequency, setFrequency] = useState(frequencies[0])
@@ -110,7 +117,7 @@ export default function Example() {
               </div>
               <p className="mt-4 text-sm leading-6 text-gray-300">{tier.description}</p>
               <p className="mt-6 flex items-baseline gap-x-1">
-                <span className="text-4xl font-bold tracking-tight text-white">{tier.price[frequency.value]}</span>
+                <span className="text-4xl font-bold tracking-tight text-white">{tier.price[frequency.value as Frequency]}</span>
                 <span className="text-sm font-semibold leading-6 text-gray-300">{frequency.priceSuffix}</span>
               </p>
               <a
